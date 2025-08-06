@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  jenkins:
+    build: ./jenkins   # caminho relativo onde está o Dockerfile
+    ports:
+      - "8080:8080"    # interface web Jenkins
+      - "50000:50000"  # conexão com agentes Jenkins (se precisar)
+    volumes:
+      - jenkins-data:/var/jenkins_home
+    restart: unless-stopped
+
+volumes:
+  jenkins-data:
