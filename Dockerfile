@@ -1,5 +1,7 @@
 FROM jenkins/jenkins:lts
 
+COPY jenkins/init.groovy.d/ /usr/share/jenkins/ref/init.groovy.d/
+
 USER root
 
 # Atualiza e instala Maven e OpenJDK 17
