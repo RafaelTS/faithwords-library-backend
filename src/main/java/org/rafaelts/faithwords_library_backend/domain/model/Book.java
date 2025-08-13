@@ -18,9 +18,10 @@ public class Book {
     private String title;
     private String author;
     private String medium;
+    private Boolean isForRent;
 
     @Column(name = "quantity")
-    private int quantity; // número total de exemplares
+    private int quantity;
 
     public boolean isAvailable() {
         return quantity > 0;
