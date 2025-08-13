@@ -22,5 +22,27 @@ pipeline {
                  sh 'mvn -B -DskipTests=false test'
              }
         }
+        stage('Testes de Integração') {
+            steps {
+                sh 'mvn verify -Pintegration'
+            }
+        }
+
+        stage('Testes Web (UI)') {
+            steps {
+                sh 'mvn verify -Pweb'
+            }
+        }
+    }
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
+            junit 'target/failsafe-reports/*.xml'
+        }
+        failure {
+            mail to: 'time@empresa.com',
+                 subject: "Falha no build ${env.BUILD_NUMBER}",
+                 body: "Verificar os logs do Jenkins: ${env.BUILD_URL}"
+        }
     }
 }

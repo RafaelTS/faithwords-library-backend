@@ -21,8 +21,8 @@ public class Book {
     private String medium;
 
     @Column(name = "isforrent", nullable = false)
-    @JsonProperty("isForRent") // garante o nome no JSON
-    private Boolean isForRent;
+    @JsonProperty("isForRent")
+    private boolean isForRent;
 
     @Column(name = "quantity")
     private int quantity;
@@ -30,4 +30,6 @@ public class Book {
     public boolean isAvailable() {
         return quantity > 0;
     }
+
+
 }
