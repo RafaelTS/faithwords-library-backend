@@ -19,12 +19,14 @@ pipeline {
         }
         stage('Unit Tests') {
              steps {
-                 sh 'mvn -B -DskipTests=false test'
+                 sh 'mvn test -DskipUnitTests=false -DskipIntegrationTests=true'
+                 junit '**/target/surefire-reports/*.xml'
              }
         }
-        stage('Testes de Integração') {
+        stage('Integration Tests') {
             steps {
-                sh 'mvn verify -Pintegration'
+                sh 'mvn verify -DskipUnitTests=true -DskipIntegrationTests=false'
+                junit '**/target/failsafe-reports/*.xml'
             }
         }
 
