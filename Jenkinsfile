@@ -29,13 +29,7 @@ pipeline {
                 junit '**/target/failsafe-reports/*.xml'
             }
         }
-
-        stage('Testes Web (UI)') {
-            steps {
-                sh 'mvn verify -Pweb'
-            }
-        }
-        stage('Web Tests') {
+    stage('Web Tests') {
             steps {
                 sh 'mvn verify -DskipUnitTests=true -DskipIntegrationTests=true -DskipWebTests=false'
                 junit '**/target/web-test-reports/*.xml'
