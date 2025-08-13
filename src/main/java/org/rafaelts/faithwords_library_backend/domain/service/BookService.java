@@ -16,18 +16,19 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book save(Book book) {
-        return bookRepository.save(book);
-    }
-
-    public List<Book> findAll() {
-        return bookRepository.findAll();
-    }
-
     public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
     }
 
-    // Aqui pode colocar outras regras específicas de negócio, por exemplo:
-    // public List<Book> findAvailableBooksForRent() {...}
+    public List<Book> findByTitle(String title) {
+        return bookRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Book> findAvailableBooks() {
+        return bookRepository.findByQuantityGreaterThan(0);
+    }
+
+    public List<Book> findByIsForRent(boolean isForRent) {
+        return bookRepository.findByIsForRent(isForRent);
+    }
 }
