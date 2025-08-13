@@ -1,5 +1,6 @@
 package org.rafaelts.faithwords_library_backend.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,9 @@ public class Book {
     private String title;
     private String author;
     private String medium;
+
+    @Column(name = "isforrent", nullable = false)
+    @JsonProperty("isForRent") // garante o nome no JSON
     private Boolean isForRent;
 
     @Column(name = "quantity")
