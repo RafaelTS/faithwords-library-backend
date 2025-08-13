@@ -35,6 +35,12 @@ pipeline {
                 sh 'mvn verify -Pweb'
             }
         }
+        stage('Web Tests') {
+            steps {
+                sh 'mvn verify -DskipUnitTests=true -DskipIntegrationTests=true -DskipWebTests=false'
+                junit '**/target/web-test-reports/*.xml'
+            }
+        }
     }
     post {
         always {

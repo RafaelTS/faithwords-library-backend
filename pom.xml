@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<skipIntegrationTests>false</skipIntegrationTests>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -86,7 +87,6 @@
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -135,14 +135,17 @@
 				<version>3.2.5</version>
 				<executions>
 					<execution>
+						<id>integration-tests</id>
 						<goals>
 							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
+						<configuration>
+							<skipITs>${skipIntegrationTests}</skipITs>
+						</configuration>
 					</execution>
 				</executions>
 				<configuration>
-					<!-- Inclui apenas testes com padrão *IT -->
 					<includes>
 						<include>**/*IT.java</include>
 					</includes>
