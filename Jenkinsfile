@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        SONAR_HOST_URL = 'http://sonarqube:9000'
+        SONAR_USER = 'sonar'       // substitua se necessário
+        SONAR_PASSWORD = 'sonar'   // substitua se necessário
+    }
 
     tools {
         jdk 'JDK_17'        // Nome configurado no Jenkins
@@ -34,13 +39,15 @@ pipeline {
                 sh 'mvn verify -DskipUnitTests=true -DskipIntegrationTests=true -DskipWebTests=false'
             }
         }
-        stage('SonarQube Analysis') {
+        stage('SonarQube analysis') {
             steps {
                 sh """
-                    mvn sonar:sonar \
+                    sonar-scanner \
                         -Dsonar.projectKey=faithwords-library-backend \
-                        -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_TOKEN
+                        -Dsonar.sources=src \
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONAR_USER} \
+                        -Dsonar.password=${SONAR_PASSWORD}
                 """
             }
         }
@@ -51,10 +58,10 @@ pipeline {
             junit 'target/surefire-reports/*.xml'
             junit 'target/failsafe-reports/*.xml'
         }
-        failure {
-            mail to: 'time@empresa.com',
-                 subject: "Falha no build ${env.BUILD_NUMBER}",
-                 body: "Verificar os logs do Jenkins: ${env.BUILD_URL}"
-        }
+ //       failure {
+ //           mail to: 'time@empresa.com',
+ //                subject: "Falha no build ${env.BUILD_NUMBER}",
+ //                body: "Verificar os logs do Jenkins: ${env.BUILD_URL}"
+ //       }
     }
 }
