@@ -29,12 +29,23 @@ pipeline {
                 junit '**/target/failsafe-reports/*.xml'
             }
         }
-    stage('Web Tests') {
+        stage('Controller Tests') {
             steps {
                 sh 'mvn verify -DskipUnitTests=true -DskipIntegrationTests=true -DskipWebTests=false'
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                sh """
+                    mvn sonar:sonar \
+                        -Dsonar.projectKey=faithwords-library-backend \
+                        -Dsonar.host.url=$SONAR_HOST_URL \
+                        -Dsonar.login=$SONAR_TOKEN
+                """
+            }
+        }
     }
+
     post {
         always {
             junit 'target/surefire-reports/*.xml'
