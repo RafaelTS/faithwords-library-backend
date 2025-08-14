@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        SONAR_HOST_URL = 'http://sonarqube:9000'
+        SONAR_TOKEN = credentials('sonar-token')
+    }
+
     tools {
         jdk 'JDK_17'
     }
@@ -40,14 +45,13 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                // Roda apenas o Maven Sonar Goal
+                // 
                 sh """
                     mvn sonar:sonar \
                         -Dsonar.projectKey=faithwords-library-backend \
                         -Dsonar.sources=src \
                         -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=sonar \
-                        -Dsonar.password=sonar
+                        -Dsonar.login=${SONAR_TOKEN}
                 """
             }
         }
