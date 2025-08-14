@@ -49,7 +49,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=faithwords-library-backend -Dsonar.sources=src"
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=faithwords-library-backend -Dsonar.sources=src'
                 }
             }
         }
