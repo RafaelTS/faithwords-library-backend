@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         SONAR_HOST_URL = 'http://sonarqube:9000'
-        SONAR_TOKEN = credentials('sonar-token')
     }
 
     tools {
@@ -45,14 +44,9 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                // 
-                sh """
-                    mvn sonar:sonar \
-                        -Dsonar.projectKey=faithwords-library-backend \
-                        -Dsonar.sources=src \
-                        -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=${SONAR_TOKEN}
-                """
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=faithwords-library-backend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN'
+                }
             }
         }
     }
