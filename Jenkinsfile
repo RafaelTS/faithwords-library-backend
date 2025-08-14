@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        SONAR_HOST_URL = 'http://sonarqube:9000'
-        SONAR_USER = 'sonar'
-        SONAR_PASSWORD = 'sonar'
-    }
-
     tools {
         jdk 'JDK_17'
     }
@@ -38,34 +32,31 @@ pipeline {
             }
         }
 
-        stage('Controller (Web Slice) Tests') {
+        stage('Controller Tests') {
             steps {
                 sh 'mvn verify -DskipUnitTests=true -DskipIntegrationTests=true -DskipWebTests=false'
-                // opcional: adicionar junit pattern se você gerar relatórios específicos para Web Tests
-                // junit '**/target/web-test-reports/*.xml'
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=faithwords-library-backend -Dsonar.sources=src'
-                }
+                // Roda apenas o Maven Sonar Goal
+                sh """
+                    mvn sonar:sonar \
+                        -Dsonar.projectKey=faithwords-library-backend \
+                        -Dsonar.sources=src \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=sonar \
+                        -Dsonar.password=sonar
+                """
             }
         }
     }
 
     post {
         always {
-            // garante que todos os relatórios de teste sejam publicados
             junit '**/target/surefire-reports/*.xml'
             junit '**/target/failsafe-reports/*.xml'
-            // junit '**/target/web-test-reports/*.xml' // se houver
         }
-        // failure {
-        //     mail to: 'time@empresa.com',
-        //          subject: "Falha no build ${env.BUILD_NUMBER}",
-        //          body: "Verificar os logs do Jenkins: ${env.BUILD_URL}"
-        // }
     }
 }
