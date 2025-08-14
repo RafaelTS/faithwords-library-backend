@@ -49,11 +49,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh """
-                        sonar-scanner \
-                            -Dsonar.projectKey=faithwords-library-backend \
-                            -Dsonar.sources=src
-                    """
+                    sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=faithwords-library-backend -Dsonar.sources=src"
                 }
             }
         }
@@ -61,6 +57,7 @@ pipeline {
 
     post {
         always {
+            // garante que todos os relatórios de teste sejam publicados
             junit '**/target/surefire-reports/*.xml'
             junit '**/target/failsafe-reports/*.xml'
             // junit '**/target/web-test-reports/*.xml' // se houver
