@@ -27,13 +27,13 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<Book>> searchByTitle(@RequestParam(required = false) String title,
-            @RequestParam(required = false) Boolean isForRent) {
+            @RequestParam(required = false) Boolean forRent) {
         List<Book> books;
 
         if (title != null) {
             books = bookService.findByTitle(title);
-        } else if (isForRent != null) {
-            books = bookService.findByIsForRent(isForRent);
+        } else if (forRent != null) {
+            books = bookService.findByIsForRent(forRent);
         } else {
             books = bookService.findAvailableBooks();
         }

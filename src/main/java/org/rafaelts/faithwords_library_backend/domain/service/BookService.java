@@ -28,8 +28,8 @@ public class BookService {
         return bookRepository.findByQuantityGreaterThan(0);
     }
 
-    public List<Book> findByIsForRent(boolean isForRent) {
-        return bookRepository.findByIsForRent(isForRent);
+    public List<Book> findByIsForRent(boolean forRent) {
+        return bookRepository.findByIsForRent(forRent);
     }
 
     public Book save(Book newBook) {
