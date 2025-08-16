@@ -22,12 +22,12 @@ class BookServiceTest {
 
     @Test
     void findByIsForRent_delegatesToRepo() {
-        when(repo.findByIsForRent(true)).thenReturn(
+        when(repo.findByForRent(true)).thenReturn(
                 List.of(Book.builder().title("Teste").forRent(true).quantity(1).build())
         );
 
         var result = service.findByIsForRent(true);
         assertEquals(1, result.size());
-        verify(repo).findByIsForRent(true);
+        verify(repo).findByForRent(true);
     }
 }

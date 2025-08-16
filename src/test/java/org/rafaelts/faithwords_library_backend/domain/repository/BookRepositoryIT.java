@@ -31,7 +31,7 @@ class BookRepositoryIT {
                            .medium("—").quantity(2).forRent(false).build());
         em.flush();
 
-        List<Book> rentals = repo.findByIsForRent(true);
+        List<Book> rentals = repo.findByForRent(true);
         assertThat(rentals).extracting(Book::getForRent).containsOnly(true);
     }
 

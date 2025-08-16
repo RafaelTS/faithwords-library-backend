@@ -29,7 +29,7 @@ public class BookService {
     }
 
     public List<Book> findByIsForRent(Boolean forRent) {
-        return bookRepository.findByIsForRent(forRent);
+        return bookRepository.findByForRent(forRent);
     }
 
     public Book save(Book newBook) {

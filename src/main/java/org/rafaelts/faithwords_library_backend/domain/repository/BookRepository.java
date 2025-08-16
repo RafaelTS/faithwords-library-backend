@@ -13,7 +13,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByQuantityGreaterThan(int quantity);
 
-    List<Book> findByIsForRent(Boolean forRent);
+    List<Book> findByForRent(Boolean forRent);
 
 }
 
