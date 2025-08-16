@@ -44,7 +44,7 @@ class BookControllerTest {
                 List.of(Book.builder().title("Aluguel").forRent(true).quantity(1).build())
         );
 
-        mvc.perform(get("/books?isForRent=true"))
+        mvc.perform(get("/books?forRent=true"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].forRent").value(true));
     }
