@@ -26,20 +26,20 @@ class BookRepositoryIT {
     @DisplayName("findByIsForRent(true) retorna apenas livros para aluguel")
     void shouldFindOnlyRentals() {
         em.persist(Book.builder().title("O Livro dos Espíritos").author("Allan Kardec")
-                           .medium("—").quantity(3).isForRent(true).build());
+                           .medium("—").quantity(3).forRent(true).build());
         em.persist(Book.builder().title("Evangelho Segundo o Espiritismo").author("Allan Kardec")
-                           .medium("—").quantity(2).isForRent(false).build());
+                           .medium("—").quantity(2).forRent(false).build());
         em.flush();
 
         List<Book> rentals = repo.findByIsForRent(true);
-        assertThat(rentals).extracting(Book::isForRent).containsOnly(true);
+        assertThat(rentals).extracting(Book::getForRent).containsOnly(true);
     }
 
     @Test
     @DisplayName("findByTitleContainingIgnoreCase funciona")
     void searchByTitle() {
         em.persist(Book.builder().title("Nosso Lar").author("André Luiz").medium("Chico Xavier")
-                           .quantity(1).isForRent(true).build());
+                           .quantity(1).forRent(true).build());
         em.flush();
 
         List<Book> out = repo.findByTitleContainingIgnoreCase("nosso");

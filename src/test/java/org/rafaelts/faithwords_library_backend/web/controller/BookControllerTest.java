@@ -29,7 +29,7 @@ class BookControllerTest {
     @Test
     void getById_returns200() throws Exception {
         Mockito.when(service.findById(1L)).thenReturn(Optional.of(
-                Book.builder().id(1L).title("Nosso Lar").quantity(1).isForRent(true).build()
+                Book.builder().id(1L).title("Nosso Lar").quantity(1).forRent(true).build()
         ));
 
         mvc.perform(get("/books/1"))
@@ -41,18 +41,18 @@ class BookControllerTest {
     @Test
     void search_isForRent_true() throws Exception {
         Mockito.when(service.findByIsForRent(true)).thenReturn(
-                List.of(Book.builder().title("Aluguel").isForRent(true).quantity(1).build())
+                List.of(Book.builder().title("Aluguel").forRent(true).quantity(1).build())
         );
 
         mvc.perform(get("/books?isForRent=true"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].isForRent").value(true));
+                .andExpect(jsonPath("$[0].forRent").value(true));
     }
 
     @Test
     void search_byTitle() throws Exception {
         Mockito.when(service.findByTitle("lar")).thenReturn(
-                List.of(Book.builder().title("Nosso Lar").isForRent(false).quantity(2).build())
+                List.of(Book.builder().title("Nosso Lar").forRent(false).quantity(2).build())
         );
 
         mvc.perform(get("/books?title=lar"))
