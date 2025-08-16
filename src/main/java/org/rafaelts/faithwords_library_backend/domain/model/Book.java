@@ -20,9 +20,9 @@ public class Book {
     private String author;
     private String medium;
 
-    @Column(name = "isforrent", nullable = false)
-    @JsonProperty("isForRent")
-    private boolean isForRent;
+    @Column(name = "forrent", nullable = false)
+    @JsonProperty("forRent")
+    private Boolean forRent;
 
     @Column(name = "quantity")
     private int quantity;

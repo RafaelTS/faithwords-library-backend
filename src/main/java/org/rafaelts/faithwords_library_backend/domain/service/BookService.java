@@ -31,4 +31,27 @@ public class BookService {
     public List<Book> findByIsForRent(boolean isForRent) {
         return bookRepository.findByIsForRent(isForRent);
     }
+
+    public Book save(Book newBook) {
+        return bookRepository.save(newBook);
+    }
+
+    public Optional<Book> update(Long id, Book bookToUpdate) {
+        return bookRepository.findById(id)
+                .map(existingBook -> {
+                    existingBook.setTitle(bookToUpdate.getTitle());
+                    existingBook.setAuthor(bookToUpdate.getAuthor());
+                    existingBook.setForRent(bookToUpdate.getForRent());
+                    return bookRepository.save(existingBook);
+                });
+    }
+
+    public boolean deleteById(Long id) {
+        return bookRepository.findById(id)
+                .map(existingBook -> {
+                    bookRepository.delete(existingBook);
+                    return true;
+                })
+                .orElse(false);
+    }
 }

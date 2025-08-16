@@ -23,7 +23,7 @@ class BookServiceTest {
     @Test
     void findByIsForRent_delegatesToRepo() {
         when(repo.findByIsForRent(true)).thenReturn(
-                List.of(Book.builder().title("Teste").isForRent(true).quantity(1).build())
+                List.of(Book.builder().title("Teste").forRent(true).quantity(1).build())
         );
 
         var result = service.findByIsForRent(true);
