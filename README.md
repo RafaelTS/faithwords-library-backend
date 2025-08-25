@@ -111,13 +111,24 @@ services:
 
 ---
 
-## ✅ Roadmap
+## ✅ Roadmap backend
 1. ✅ Define stack (done)
-2. 🔄 Create project skeleton (frontend/backend)
+2. ✅ Create project skeleton (backend)
+   1. 🔄 Create project skeleton (frontend/backend)
 3. 🔄 Dockerfile + docker-compose working locally
 4. 🔄 Jenkinsfile for CI/CD
 5. 🔄 Automated tests (unit/integration/E2E)
 6. 🔄 Start real MVP for the institution
+
+## ✅ Roadmap front-end
+1. ✅ Define stack (done)
+2. ✅ Create project skeleton (backend)
+    1. 🔄 Create project skeleton (frontend/backend)
+3. 🔄 Dockerfile + docker-compose working locally
+4. 🔄 Jenkinsfile for CI/CD
+5. 🔄 Automated tests (unit/integration/E2E)
+6. 🔄 Start real MVP for the institution
+
 
 ---
 
