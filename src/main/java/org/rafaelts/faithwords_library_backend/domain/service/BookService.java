@@ -45,7 +45,7 @@ public class BookService {
                 .map(existingBook -> {
                     existingBook.setTitle(bookToUpdate.getTitle());
                     existingBook.setAuthor(bookToUpdate.getAuthor());
-                    existingBook.setForRent(bookToUpdate.getForRent());
+                    existingBook.setForRent(bookToUpdate.isForRent());
                     return bookRepository.save(existingBook);
                 });
     }

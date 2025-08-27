@@ -22,7 +22,7 @@ public class Book {
 
     @Column(name = "forrent", nullable = false)
     @JsonProperty("forRent")
-    private Boolean forRent;
+    private boolean forRent;
 
     @Column(name = "quantity")
     private int quantity;

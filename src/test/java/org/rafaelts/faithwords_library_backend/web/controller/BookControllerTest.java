@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -20,12 +19,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BookController.class)
-@ActiveProfiles("test")
 @WithMockUser(username = "test", roles = {"USER"})
 class BookControllerTest {
 
-    @Autowired MockMvc mvc;
-    @MockBean BookService service;
+    @Autowired
+    private MockMvc mvc;
+
+    @MockBean
+    private BookService service;
 
     @Test
     void getById_returns200() throws Exception {
@@ -36,30 +37,40 @@ class BookControllerTest {
         mvc.perform(get("/books/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(1));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.title").value("Nosso Lar"))
+                .andExpect(jsonPath("$.forRent").value(true));
     }
 
     @Test
-    @Disabled("Comentado temporariamente para subir a aplicação")
-    void search_isForRent_true() throws Exception {
-        Mockito.when(service.findByIsForRent(true)).thenReturn(
-                List.of(Book.builder().title("Aluguel").forRent(true).quantity(1).build())
-        );
-
-        mvc.perform(get("/books?forRent=true"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].forRent").value(true));
-    }
-
-    @Test
-    @Disabled("Comentado temporariamente para subir a aplicação")
-    void search_byTitle() throws Exception {
+    @Disabled
+    void searchByTitle_returnsBooks() throws Exception {
         Mockito.when(service.findByTitle("lar")).thenReturn(
                 List.of(Book.builder().title("Nosso Lar").forRent(false).quantity(2).build())
         );
 
         mvc.perform(get("/books?title=lar"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("Nosso Lar"));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].title").value("Nosso Lar"))
+                .andExpect(jsonPath("$[0].forRent").value(false));
+    }
+
+    @Test
+    @Disabled
+    void searchByForRent_returnsBooks() throws Exception {
+        Mockito.when(service.findByIsForRent(true)).thenReturn(
+                List.of(Book.builder()
+                                .title("Aluguel")
+                                .forRent(true)
+                                .quantity(1)
+                                .build())
+        );
+
+        mvc.perform(get("/books?forRent=true"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].title").value("Aluguel"))
+                .andExpect(jsonPath("$[0].forRent").value(true));
     }
 }

@@ -32,7 +32,7 @@ class BookRepositoryIT {
         em.flush();
 
         List<Book> rentals = repo.findByForRent(true);
-        assertThat(rentals).extracting(Book::getForRent).containsOnly(true);
+        assertThat(rentals).extracting(Book::isForRent).containsOnly(true);
     }
 
     @Test

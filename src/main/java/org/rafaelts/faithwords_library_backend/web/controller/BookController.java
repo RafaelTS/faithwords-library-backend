@@ -30,28 +30,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.findAll());
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Book>> list(
-//            @RequestParam(required = false) String title,
-//            @RequestParam(required = false) Boolean forRent) {
-//
-//        List<Book> books = bookService.findAll(); // pega todos
-//
-//        if (title != null) {
-//            books = books.stream()
-//                    .filter(b -> b.getTitle().equalsIgnoreCase(title))
-//                    .toList();
-//        }
-//
-//        if (forRent != null) {
-//            books = books.stream()
-//                    .filter(b -> b.getForRent() == forRent)
-//                    .toList();
-//        }
-//
-//        return ResponseEntity.ok(books);
-//    }
-
     @PostMapping
     public ResponseEntity<Book> create(@RequestBody Book book) {
         Book createdBook = bookService.save(book);

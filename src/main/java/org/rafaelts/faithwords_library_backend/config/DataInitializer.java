@@ -13,10 +13,11 @@ public class DataInitializer {
     CommandLineRunner initDatabase(UserRepository userRepository) {
         return args -> {
             if (userRepository.count() == 0) {
-                User admin = new User();
-                admin.setUsername("admin");
-                admin.setPassword("{noop}admin123"); // {noop} para senha sem criptografia, só pra POC
-                admin.setRole("ADMIN");
+                User admin = User.builder()
+                        .username("admin")
+                        .password("{noop}admin123")
+                        .role("ADMIN")
+                        .build();
                 userRepository.save(admin);
                 System.out.println("Admin user created!");
             }
