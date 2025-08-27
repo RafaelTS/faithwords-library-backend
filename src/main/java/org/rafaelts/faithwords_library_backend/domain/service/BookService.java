@@ -20,6 +20,10 @@ public class BookService {
         return bookRepository.findById(id);
     }
 
+    public List<Book> findAll() {
+        return bookRepository.findAll();
+    }
+
     public List<Book> findByTitle(String title) {
         return bookRepository.findByTitleContainingIgnoreCase(title);
     }

@@ -26,20 +26,31 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> searchByTitle(@RequestParam(required = false) String title,
-            @RequestParam(required = false) Boolean forRent) {
-        List<Book> books;
-
-        if (title != null) {
-            books = bookService.findByTitle(title);
-        } else if (forRent != null) {
-            books = bookService.findByIsForRent(forRent);
-        } else {
-            books = bookService.findAvailableBooks();
-        }
-
-        return ResponseEntity.ok(books);
+    public ResponseEntity<List<Book>> list() {
+        return ResponseEntity.ok(bookService.findAll());
     }
+
+//    @GetMapping
+//    public ResponseEntity<List<Book>> list(
+//            @RequestParam(required = false) String title,
+//            @RequestParam(required = false) Boolean forRent) {
+//
+//        List<Book> books = bookService.findAll(); // pega todos
+//
+//        if (title != null) {
+//            books = books.stream()
+//                    .filter(b -> b.getTitle().equalsIgnoreCase(title))
+//                    .toList();
+//        }
+//
+//        if (forRent != null) {
+//            books = books.stream()
+//                    .filter(b -> b.getForRent() == forRent)
+//                    .toList();
+//        }
+//
+//        return ResponseEntity.ok(books);
+//    }
 
     @PostMapping
     public ResponseEntity<Book> create(@RequestBody Book book) {
