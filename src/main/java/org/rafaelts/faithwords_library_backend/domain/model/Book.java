@@ -30,6 +30,4 @@ public class Book {
     public boolean isAvailable() {
         return quantity > 0;
     }
-
-
 }

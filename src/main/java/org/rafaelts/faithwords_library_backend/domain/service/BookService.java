@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.rafaelts.faithwords_library_backend.domain.model.Book;
 import org.rafaelts.faithwords_library_backend.domain.repository.BookRepository;
+import org.rafaelts.faithwords_library_backend.exception.book.BookWithoutTitleException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,8 +37,11 @@ public class BookService {
         return bookRepository.findByForRent(forRent);
     }
 
-    public Book save(Book newBook) {
-        return bookRepository.save(newBook);
+    public Book save(Book book) {
+        if (book.getTitle() == null || book.getTitle().trim().isEmpty()) {
+            throw new BookWithoutTitleException();
+        }
+        return bookRepository.save(book);
     }
 
     public Optional<Book> update(Long id, Book bookToUpdate) {
